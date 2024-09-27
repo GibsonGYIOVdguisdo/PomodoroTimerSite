@@ -1,0 +1,97 @@
+:root {
+  /** CSS DARK THEME PRIMARY COLORS */
+  --color-primary-100: #382bf0;
+  --color-primary-200: #5e43f3;
+  --color-primary-300: #7a5af5;
+  --color-primary-400: #9171f8;
+  --color-primary-500: #a688fa;
+  --color-primary-600: #ba9ffb;
+
+  /** CSS DARK THEME SURFACE COLORS */
+  --color-surface-100: #121212;
+  --color-surface-200: #282828;
+  --color-surface-300: #3f3f3f;
+  --color-surface-400: #575757;
+  --color-surface-500: #717171;
+  --color-surface-600: #8b8b8b;
+}
+
+* {
+  font-family: 'Inter';
+  font-optical-sizing: auto;
+}
+
+body {
+  background-color: var(--color-surface-100);
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+p {
+  margin: 0;
+}
+button {
+  cursor: pointer;
+}
+
+.MainDiv {
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  height: fit-content;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 20px;
+  background-color: var(--color-surface-200);
+}
+
+.Timer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 250px;
+  color: white;
+  height: 250px;
+}
+
+.PomodoroCount {
+  color: #8b8b8b;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 500;
+}
+.PomodoroCycle {
+  color: #8b8b8b;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.CenterHorizontal {
+  display: flex;
+  justify-content: space-around;
+}
+
+.ButtonDiv {
+  margin-top: 25px;
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.Button1 {
+  border-radius: 20px;
+  background-color: var(--color-primary-500);
+  border-width: 0;
+  flex: 1;
+  height: 80px;
+  margin-left: 50px;
+  margin-right: 50px;
+  font-weight: 500;
+  font-size: 20px;
+}
