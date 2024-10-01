@@ -21,6 +21,11 @@ const TIMER_TEXT = document.getElementById('TimerText');
 const POMODORO_CYCLE = document.getElementById('PomodoroCycle');
 const POMODORO_COUNT = document.getElementById('PomodoroCount');
 
+function StopTimer() {
+  isActive = false;
+  START_STOP_BUTTON.innerText = 'Resume';
+}
+
 function UpdateTimerText() {
   let minutesLeft = Math.floor(currentTime / 60);
   let secondsLeft = `${currentTime % 60}`;
@@ -47,7 +52,7 @@ setInterval(() => {
     currentTime -= 1;
     UpdateTimerText();
     if (currentTime <= 0) {
-      isActive = false;
+      StopTimer();
       IncrementCycleCount();
     }
   }
@@ -65,4 +70,5 @@ START_STOP_BUTTON.onclick = () => {
 SKIP_BUTTON.onclick = () => {
   IncrementCycleCount();
   UpdateTimerText();
+  StopTimer();
 };
