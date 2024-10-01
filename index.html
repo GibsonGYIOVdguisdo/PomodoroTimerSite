@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="styles.css" rel="stylesheet" type="text/css" />
-    <script src="script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,18 +15,19 @@
   <body>
     <div class="CenterHorizontal">
       <div class="MainDiv">
-        <p class="Timer">25:00</p>
-        <p class="PomodoroCount">Pomodoro #1</p>
-        <p class="PomodoroCycle">work</p>
+        <p class="Timer" id="TimerText">25:00</p>
+        <p class="PomodoroCount" id="PomodoroCount">Pomodoro #1</p>
+        <p class="PomodoroCycle" id="PomodoroCycle">work</p>
         <div class="ButtonDiv">
-          <button class="Button1">
+          <button class="Button1" id="StartStopButton">
             <p>Start</p>
           </button>
-          <button class="Button1">
+          <button class="Button1" id="SkipButton">
             <p>Skip</p>
           </button>
         </div>
       </div>
     </div>
   </body>
+  <script src="script.js"></script>
 </html>
