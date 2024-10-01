@@ -16,8 +16,8 @@ setInterval(() => {
   if (isActive === true) {
     let minutesLeft = Math.floor(currentTime / 60);
     let secondsLeft = `${currentTime % 60}`;
-    if (secondsLeft === '0') {
-      secondsLeft = '00';
+    if (secondsLeft.length === 1) {
+      secondsLeft = `0${secondsLeft}`;
     }
     currentTime -= 1;
     TIMER_TEXT.innerText = `${minutesLeft}:${secondsLeft}`;
