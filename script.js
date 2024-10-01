@@ -21,7 +21,8 @@ const TIMER_TEXT = document.getElementById('TimerText');
 const POMODORO_CYCLE = document.getElementById('PomodoroCycle');
 const POMODORO_COUNT = document.getElementById('PomodoroCount');
 
-function StopTimer() {
+function PauseTimer() {
+  UpdateSiteTitle();
   isActive = false;
   START_STOP_BUTTON.innerText = 'Resume';
 }
@@ -33,6 +34,20 @@ function UpdateTimerText() {
     secondsLeft = `0${secondsLeft}`;
   }
   TIMER_TEXT.innerText = `${minutesLeft}:${secondsLeft}`;
+}
+
+function UpdateSiteTitle() {
+  let minutesLeft = Math.floor(currentTime / 60);
+  let secondsLeft = `${currentTime % 60}`;
+  if (secondsLeft.length === 1) {
+    secondsLeft = `0${secondsLeft}`;
+  }
+  let timerText = `${minutesLeft}:${secondsLeft}`;
+  if (isActive === true) {
+    document.title = timerText;
+  } else {
+    document.title = `PAUSED ${timerText}`;
+  }
 }
 
 function IncrementCycleCount() {
@@ -50,9 +65,10 @@ function IncrementCycleCount() {
 setInterval(() => {
   if (isActive === true) {
     currentTime -= 1;
+    UpdateSiteTitle();
     UpdateTimerText();
     if (currentTime <= 0) {
-      StopTimer();
+      PauseTimer();
       IncrementCycleCount();
     }
   }
@@ -60,6 +76,7 @@ setInterval(() => {
 
 START_STOP_BUTTON.onclick = () => {
   isActive = !isActive;
+  UpdateSiteTitle();
   if (isActive === true) {
     START_STOP_BUTTON.innerText = 'Pause';
   } else {
@@ -70,5 +87,7 @@ START_STOP_BUTTON.onclick = () => {
 SKIP_BUTTON.onclick = () => {
   IncrementCycleCount();
   UpdateTimerText();
-  StopTimer();
+  PauseTimer();
 };
+
+UpdateSiteTitle();
