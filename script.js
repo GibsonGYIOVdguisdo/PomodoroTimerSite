@@ -111,6 +111,7 @@ SKIP_BUTTON.onclick = () => {
   PauseTimer();
   IncrementCycleCount();
   UpdateTimerText();
+  UpdateSiteTitle();
 };
 
 UpdateSiteTitle();
