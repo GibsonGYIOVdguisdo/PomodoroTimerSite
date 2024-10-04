@@ -27,10 +27,15 @@ function GetCurrentCycleLength() {
 }
 
 function GetSecondsLeft() {
-  let currentTimestamp = Date.now();
-  let millisecondsLeft = endingTimestamp - currentTimestamp;
+  let millisecondsLeft;
+  if (isActive === false) {
+    millisecondsLeft = GetCurrentCycleLength() * 60 * 1000 - timePassed;
+  } else {
+    let currentTimestamp = Date.now();
+    millisecondsLeft = endingTimestamp - currentTimestamp;
+  }
   let secondsLeft = Math.floor(millisecondsLeft / 1000);
-  return secondsLeft;
+  return Math.max(secondsLeft, 0);
 }
 
 function PauseTimer() {
@@ -43,8 +48,7 @@ function UpdateTimerText() {
   let totalSeconds = GetSecondsLeft();
   let minutesLeft = Math.floor(totalSeconds / 60);
   let secondsLeft = totalSeconds % 60;
-  secondsLeft -= minutesLeft * 60;
-  if (secondsLeft.length === 1) {
+  if (secondsLeft <= 0) {
     secondsLeft = `0${secondsLeft}`;
   }
   TIMER_TEXT.innerText = `${minutesLeft}:${secondsLeft}`;
@@ -55,7 +59,7 @@ function UpdateSiteTitle() {
   let minutesLeft = Math.floor(totalSeconds / 60);
   let secondsLeft = totalSeconds % 60;
 
-  if (secondsLeft.length === 1) {
+  if (secondsLeft <= 0) {
     secondsLeft = `0${secondsLeft}`;
   }
   let timerText = `${minutesLeft}:${secondsLeft}`;
@@ -67,6 +71,7 @@ function UpdateSiteTitle() {
 }
 
 function IncrementCycleCount() {
+  timePassed = 0;
   currentCycle += 1;
   if (currentCycle >= CYCLE_ORDER.length) {
     currentCycle = 0;
@@ -103,9 +108,9 @@ START_STOP_BUTTON.onclick = () => {
 };
 
 SKIP_BUTTON.onclick = () => {
+  PauseTimer();
   IncrementCycleCount();
   UpdateTimerText();
-  PauseTimer();
 };
 
 UpdateSiteTitle();
