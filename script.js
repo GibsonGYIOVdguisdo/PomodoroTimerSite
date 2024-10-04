@@ -4,7 +4,8 @@ let workLength = 25;
 let currentCycle = 0;
 let pomodoroCount = 1;
 let isActive = false;
-let currentTime = workLength * 60;
+let timePassed = 0;
+let endingTimestamp;
 
 const CYCLE_ORDER = [
   ['work', workLength],
@@ -21,6 +22,17 @@ const TIMER_TEXT = document.getElementById('TimerText');
 const POMODORO_CYCLE = document.getElementById('PomodoroCycle');
 const POMODORO_COUNT = document.getElementById('PomodoroCount');
 
+function GetCurrentCycleLength() {
+  return CYCLE_ORDER[currentCycle][1];
+}
+
+function GetSecondsLeft() {
+  let currentTimestamp = Date.now();
+  let millisecondsLeft = endingTimestamp - currentTimestamp;
+  let secondsLeft = Math.floor(millisecondsLeft / 1000);
+  return secondsLeft;
+}
+
 function PauseTimer() {
   UpdateSiteTitle();
   isActive = false;
@@ -28,8 +40,9 @@ function PauseTimer() {
 }
 
 function UpdateTimerText() {
-  let minutesLeft = Math.floor(currentTime / 60);
-  let secondsLeft = `${currentTime % 60}`;
+  let secondsLeft = GetSecondsLeft();
+  let minutesLeft = Math.floor(secondsLeft / 60);
+  secondsLeft -= minutesLeft * 60;
   if (secondsLeft.length === 1) {
     secondsLeft = `0${secondsLeft}`;
   }
@@ -37,8 +50,8 @@ function UpdateTimerText() {
 }
 
 function UpdateSiteTitle() {
-  let minutesLeft = Math.floor(currentTime / 60);
-  let secondsLeft = `${currentTime % 60}`;
+  let minutesLeft = Math.floor(GetSecondsLeft() / 60);
+  let secondsLeft = `${GetSecondsLeft() % 60}`;
   if (secondsLeft.length === 1) {
     secondsLeft = `0${secondsLeft}`;
   }
@@ -58,16 +71,14 @@ function IncrementCycleCount() {
   }
   POMODORO_CYCLE.innerText = CYCLE_ORDER[currentCycle][0];
   POMODORO_COUNT.innerText = `Pomodoro #${pomodoroCount}`;
-  currentTime = CYCLE_ORDER[currentCycle][1] * 60;
 }
 
 // Timer code to run every second
 setInterval(() => {
   if (isActive === true) {
-    currentTime -= 1;
     UpdateSiteTitle();
     UpdateTimerText();
-    if (currentTime <= 0) {
+    if (GetSecondsLeft() <= 0) {
       PauseTimer();
       IncrementCycleCount();
     }
@@ -76,11 +87,15 @@ setInterval(() => {
 
 START_STOP_BUTTON.onclick = () => {
   isActive = !isActive;
-  UpdateSiteTitle();
   if (isActive === true) {
+    endingTimestamp = Date.now();
+    endingTimestamp = endingTimestamp +=
+      GetCurrentCycleLength() * 60 * 1000 - timePassed;
     START_STOP_BUTTON.innerText = 'Pause';
   } else {
     START_STOP_BUTTON.innerText = 'Resume';
+    let cycleLengthInMilliseconds = GetCurrentCycleLength() * 60 * 1000;
+    timePassed = cycleLengthInMilliseconds - (endingTimestamp - Date.now());
   }
 };
 
