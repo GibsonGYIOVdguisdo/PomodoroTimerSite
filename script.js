@@ -40,8 +40,9 @@ function PauseTimer() {
 }
 
 function UpdateTimerText() {
-  let secondsLeft = GetSecondsLeft();
-  let minutesLeft = Math.floor(secondsLeft / 60);
+  let totalSeconds = GetSecondsLeft();
+  let minutesLeft = Math.floor(totalSeconds / 60);
+  let secondsLeft = totalSeconds % 60;
   secondsLeft -= minutesLeft * 60;
   if (secondsLeft.length === 1) {
     secondsLeft = `0${secondsLeft}`;
@@ -50,8 +51,10 @@ function UpdateTimerText() {
 }
 
 function UpdateSiteTitle() {
-  let minutesLeft = Math.floor(GetSecondsLeft() / 60);
-  let secondsLeft = `${GetSecondsLeft() % 60}`;
+  let totalSeconds = GetSecondsLeft();
+  let minutesLeft = Math.floor(totalSeconds / 60);
+  let secondsLeft = totalSeconds % 60;
+
   if (secondsLeft.length === 1) {
     secondsLeft = `0${secondsLeft}`;
   }
